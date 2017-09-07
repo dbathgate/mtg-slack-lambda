@@ -27,11 +27,11 @@ module.exports = {
     },
     leftBrace: {
       pattern: /{/g,
-      replacement: ''
+      replacement: '( '
     },
     rightBrace: {
       pattern: /}/g,
-      replacement: ''
+      replacement: ' )'
     }
   }
 };
