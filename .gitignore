@@ -5,3 +5,6 @@ jspm_packages
 # Serverless directories
 .serverless
 config.override.js
+
+.idea/
+.DS_Store

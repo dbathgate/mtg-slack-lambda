@@ -3,16 +3,13 @@
 const request = require('request');
 const qs = require('qs');
 const fs = require('fs');
-const _ = require('underscore');
+const _ = require('lodash');
 
 var config = require('./config.default');
-var appConfig = config.app;
-var replacementsConfig = config.replacements;
 
 if (fs.existsSync('./config.override.js')) {
   var configOverrides = require('./config.override');
-  appConfig = _.extend(config.app, configOverrides.app);
-  replacementsConfig = _.extend(config.replacements, configOverrides.replacements);
+  config = _.assign(config, configOverrides);
 }
 
 module.exports.findCard = (event, context, callback) => {
@@ -21,7 +18,7 @@ module.exports.findCard = (event, context, callback) => {
   var text = params['text'];
   var token = params['token'];
 
-  if (token != appConfig.token) {
+  if (token != config.app.token) {
     callback(null, {
       statusCode: 403,
       body: JSON.stringify({
@@ -54,9 +51,9 @@ module.exports.findCard = (event, context, callback) => {
     var types = data[0]['types'][0];
     var cost = data[0]['cost'];
 
-    _.keys(replacementsConfig).forEach(key => {
-      cardtext = cardtext.replace(replacementsConfig[key].pattern, replacementsConfig[key].replacement);
-      cost = cost.replace(replacementsConfig[key].pattern, replacementsConfig[key].replacement);
+    _.forEach(config.replacements, (item) => {
+      cardtext = cardtext.replace(item.pattern, item.replacement);
+      cost = cost.replace(item.pattern, item.replacement);
     });
 
     var response = {
