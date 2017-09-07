@@ -5,7 +5,7 @@ const qs = require('qs');
 const fs = require('fs');
 const _ = {
   merge: require('lodash.merge'),
-  forEach: require('lodash.forEach')
+  forEach: require('lodash.foreach')
 };
 
 var config = require('./config.default');
