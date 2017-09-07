@@ -1,9 +1,24 @@
 # Setup
 
-Add Slack Verification Token to `config.js`
+Add Slack Verification Token to `config.default.js`
 ```
 module.exports = {
-  token: '<your toen here>'
+  app: {
+    token: '<your toen here>'
+  }
+};
+```
+
+# Overriding Default Configurations
+
+Create `config.override.js` to override default settings
+```
+module.exports = {
+  replacements: {
+    white: {
+      pattern: /{W}/g,
+      replacement: ':mana-white:'
+    }
 };
 ```
 
@@ -24,7 +39,7 @@ serverless deploy
 ```
 
 # Cleanup
-** If you want to tear the AWS Lambda function down*
+*If you want to tear the AWS Lambda function down*
 ```
 serverless remove
 ```

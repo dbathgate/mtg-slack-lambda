@@ -2,17 +2,18 @@
 
 const request = require('request');
 const qs = require('qs');
-const config = require('./config');
+const fs = require('fs');
+const _ = require('underscore');
 
-const replacements = [
-  [/{W}/g, ':white_circle:'],
-  [/{U}/g, ':large_blue_circle:'],
-  [/{B}/g, ':black_circle:'],
-  [/{R}/g, ':red_circle:'],
-  [/{G}/g, ':tennis:'],
-  [/{/g, ''],
-  [/}/g, '']
-];
+var config = require('./config.default');
+var appConfig = config.app;
+var replacementsConfig = config.replacements;
+
+if (fs.existsSync('./config.override.js')) {
+  var configOverrides = require('./config.override');
+  appConfig = _.extend(config.app, configOverrides.app);
+  replacementsConfig = _.extend(config.replacements, configOverrides.replacements);
+}
 
 module.exports.findCard = (event, context, callback) => {
 
@@ -20,7 +21,7 @@ module.exports.findCard = (event, context, callback) => {
   var text = params['text'];
   var token = params['token'];
 
-  if (token != config.token) {
+  if (token != appConfig.token) {
     callback(null, {
       statusCode: 403,
       body: JSON.stringify({
@@ -53,9 +54,9 @@ module.exports.findCard = (event, context, callback) => {
     var types = data[0]['types'][0];
     var cost = data[0]['cost'];
 
-    replacements.forEach(replacement =>{
-      cardtext = cardtext.replace(replacement[0], replacement[1]);
-      cost = cost.replace(replacement[0], replacement[1]);
+    _.keys(replacementsConfig).forEach(key => {
+      cardtext = cardtext.replace(replacementsConfig[key].pattern, replacementsConfig[key].replacement);
+      cost = cost.replace(replacementsConfig[key].pattern, replacementsConfig[key].replacement);
     });
 
     var response = {
