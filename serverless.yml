@@ -14,7 +14,7 @@ provider:
 
 # The `functions` block defines what code to deploy
 functions:
-  helloWorld:
+  findCard:
     handler: handler.findCard
     # The `events` block defines how to trigger the handler.helloWorld code
     events:

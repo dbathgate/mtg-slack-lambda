@@ -33,6 +33,13 @@ export AWS_SECRET_ACCESS_KEY=<your secret key>
 npm install
 ```
 
+
+# Testing Locally
+
+```
+serverless invoke local -f findCard --data '{"body": "token=<your token here>&text=mummy"}'
+```
+
 # Deploy
 ```
 serverless deploy
