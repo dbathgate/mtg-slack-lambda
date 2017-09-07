@@ -1,22 +1,34 @@
 'use strict';
 
-var request = require('request');
-var qs = require('qs');
+const request = require('request');
+const qs = require('qs');
+const config = require('./config');
 
 const replacements = [
-  ['{W}', ':white_circle:'],
-  ['{U}', ':large_blue_circle:'],
-  ['{B}', ':black_circle:'],
-  ['{R}', ':red_circle:'],
-  ['{G}', ':tennis:'],
-  ['{', ''],
-  ['}', '']
+  [/{W}/g, ':white_circle:'],
+  [/{U}/g, ':large_blue_circle:'],
+  [/{B}/g, ':black_circle:'],
+  [/{R}/g, ':red_circle:'],
+  [/{G}/g, ':tennis:'],
+  [/{/g, ''],
+  [/}/g, '']
 ];
 
 module.exports.findCard = (event, context, callback) => {
 
   var params = qs.parse(event.body);
   var text = params['text'];
+  var token = params['token'];
+
+  if (token != config.token) {
+    callback(null, {
+      statusCode: 403,
+      body: JSON.stringify({
+        'error': 'Forbidden.'
+      })
+    });
+    return;
+  }
 
   request.get({
     url: 'https://api.deckbrew.com/mtg/cards?name=' + text,
