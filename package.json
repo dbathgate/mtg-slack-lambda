@@ -9,8 +9,9 @@
   "author": "dbathgate",
   "license": "Apache-2.0",
   "dependencies": {
+    "lodash.foreach": "^4.5.0",
+    "lodash.merge": "^4.6.0",
     "qs": "^6.5.0",
-    "request": "^2.81.0",
-    "lodash": "^4.17.4"
+    "request": "^2.81.0"
   }
 }

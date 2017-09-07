@@ -3,13 +3,16 @@
 const request = require('request');
 const qs = require('qs');
 const fs = require('fs');
-const _ = require('lodash');
+const _ = {
+  merge: require('lodash.merge'),
+  forEach: require('lodash.forEach')
+};
 
 var config = require('./config.default');
 
 if (fs.existsSync('./config.override.js')) {
   var configOverrides = require('./config.override');
-  config = _.assign(config, configOverrides);
+  config = _.merge(config, configOverrides);
 }
 
 module.exports.findCard = (event, context, callback) => {
