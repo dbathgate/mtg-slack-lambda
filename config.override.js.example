@@ -1,0 +1,29 @@
+'use strict';
+
+module.exports = {
+  app: {
+    token: 'different token'
+  },
+  replacements: {
+    white: {
+      pattern: /{W}/g,
+      replacement: ':mana-white:'
+    },
+    blue: {
+      pattern: /{U}/g,
+      replacement: ':mana-blue:'
+    },
+    black: {
+      pattern: /{B}/g,
+      replacement: ':mana-black:'
+    },
+    red: {
+      pattern: /{R}/g,
+      replacement: ':mana-red:'
+    },
+    green: {
+      pattern: /{G}/g,
+      replacement: ':mana-green:'
+    }
+  }
+};
