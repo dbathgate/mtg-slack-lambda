@@ -32,11 +32,13 @@ module.exports.findCard = (event, context, callback) => {
   }
 
   request.get({
-    url: 'https://api.magicthegathering.io/v1/cards?name=' + text,
+    url: 'https://api.magicthegathering.io/v1/cards?pageSize=1&name=' + text,
     json: true,
     }, (err, res, data) => {
 
-    if(data.cards.length == 0) {
+    const cards = data.cards;
+
+    if(cards.length == 0) {
       callback(null, {
         statusCode: 200,
         body: JSON.stringify({
@@ -48,11 +50,13 @@ module.exports.findCard = (event, context, callback) => {
       return;
     }
 
-    var name = data.cards[0]['name'];
-    var cardtext = data.cards[0]['text'];
-    var imageurl = data.cards[0]['imageUrl'];
-    var types = data.cards[0]['types'][0];
-    var cost = data.cards[0]['manaCost'];
+    const card = cards[0];
+
+    var name = card['name'];
+    var cardtext = card['text'];
+    var imageurl = card['imageUrl'];
+    var types = card['types'].join(' ');
+    var cost = card['manaCost'];
 
     _.forEach(config.replacements, (item) => {
       cardtext = cardtext.replace(item.pattern, item.replacement);
