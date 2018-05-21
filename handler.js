@@ -59,8 +59,14 @@ module.exports.findCard = (event, context, callback) => {
     var cost = card['manaCost'];
 
     _.forEach(config.replacements, (item) => {
-      cardtext = cardtext.replace(item.pattern, item.replacement);
-      cost = cost.replace(item.pattern, item.replacement);
+      if (cardtext) {
+        cardtext = cardtext.replace(item.pattern, item.replacement);
+      }
+
+      if (cost) {
+        cost = cost.replace(item.pattern, item.replacement);
+      }
+
     });
 
     var response = {
