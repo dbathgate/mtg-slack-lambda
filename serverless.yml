@@ -5,7 +5,7 @@
 # uses to deploy your code to your provider of choice
 
 # The `service` block is the name of the service
-service: mgt-slack
+service: mtg-slack
 
 # The `provider` block defines where your service will be deployed
 provider:
