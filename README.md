@@ -4,7 +4,7 @@ Add Slack Verification Token to `config.default.js`
 ```
 module.exports = {
   app: {
-    token: '<your toen here>'
+    token: '<your token here>'
   }
 };
 ```
@@ -46,7 +46,7 @@ serverless deploy
 ```
 
 # Cleanup
-*If you want to tear the AWS Lambda function down*
+*If you want to tear down the AWS Lambda function*
 ```
 serverless remove
 ```
